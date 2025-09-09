@@ -2,6 +2,13 @@
 <html lang="en">
 
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-W2XF7D3N');</script>
+    <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legions Armory Experience Assistant: Legends of the Coliseum Edition</title>
@@ -67,7 +74,11 @@
 </head>
 
 <body class="flex flex-col md:flex-row h-screen overflow-hidden p-4 md:p-8">
-
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2XF7D3N"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
     <!-- Sidebar with category icons and action buttons -->
     <aside class="w-full md:w-24 bg-[#2c2c2c] md-card flex md:flex-col items-center justify-between space-x-2 md:space-x-0 md:space-y-3 p-2 md:p-6 mb-4 md:mb-0 md:mr-6">
 
@@ -704,13 +715,13 @@
                             selectedUpperIndex = randomIndex;
                         }
 
-                        //TODO: helmet can be null, everything else should have some value
-
                     }
 
-                    // TODO: Make sure that the tail is also randomly on/off
+                    // Chance to not display the tail
+                    const showTail = Math.random() < 0.5;
+
                     // For the Tail, we need to get the index of the randomly selected upper torso
-                    if (selectedUpperIndex !== -1) {
+                    if (showTail && selectedUpperIndex !== -1) {
                         selectedItems.tail = allOptions.tail[selectedUpperIndex];
                         tailBtn.classList.add('active');
                     } else {
@@ -718,6 +729,14 @@
                         selectedItems.tail = null;
                         tailBtn.classList.remove('active');
                     }
+
+                    // Also, just for kicks, a chance to not display the helmet. This might not be wanted.
+                    // A 20% chance to not equip helmet
+                    const showHelmet = Math.random() > 0.2;
+                    if (!showHelmet) {
+                        selectedItems.helmet = null;
+                    }
+
                     renderFigure();
                     updateSelectionBorders();
                 });
