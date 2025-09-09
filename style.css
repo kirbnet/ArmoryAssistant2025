@@ -1,0 +1,47 @@
+body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+/* SVG icons for buttons */
+.svg-icon {
+    filter: drop-shadow(0 0 5px rgba(0, 255, 204, 0.5));
+    transition: filter 0.3s ease-in-out;
+}
+
+.icon-btn.active .svg-icon,
+.icon-btn:hover .svg-icon {
+    filter: drop-shadow(0 0 8px rgba(0, 255, 204, 0.8));
+}
+
+/* Keyframes for a subtle background animation */
+@keyframes pulse {
+    0% { box-shadow: 0 0 10px rgba(0, 255, 204, 0.2); }
+    50% { box-shadow: 0 0 15px rgba(0, 255, 204, 0.4); }
+    100% { box-shadow: 0 0 10px rgba(0, 255, 204, 0.2); }
+}
+
+/* The figure display area with subtle pulse effect */
+#figure-display {
+    min-height: 400px;
+    background-color: #000;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #333;
+    animation: pulse 4s infinite ease-in-out;
+    margin-bottom: 24px;
+}
+
+/* The layered images */
+#figure-display img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
+}
