@@ -39,6 +39,11 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.23), 0 3px 6px rgba(0, 0, 0, 0.16);
         }
 
+        .externallink {
+            color: #20c997;
+            text-decoration: underline;
+        }
+
         /* Active state for sidebar icons */
         .icon-btn.active {
             color: #ffc107;
@@ -487,7 +492,7 @@
                     <div id="welcome-message" class="absolute inset-0 flex items-center justify-center p-4 text-center">
                         <div class="max-w-prose space-y-2">
                             <h3 class="text-xl font-semibold text-gray-400">Welcome to the Armory Assistant!</h3>
-                            <p class="text-gray-500 text-sm">In the Armory Experience, you will make some choices about your figure that you are building. You will select an Upper Body (with tail), Lower Body, Armor Set, and Helmet. You will also get to pick up a set of Weapons and a Trophy for your custom Legendary Gladiator!</p>
+                            <p class="text-gray-500 text-sm">At the Legions Con Armory Experience, you will make some choices about your figure that you are building. You will select an Upper Body (with tail), Lower Body, Armor Set, and Helmet.</p>
                             <p class="text-gray-500 text-sm">This app will help you plan ahead and play around with those same selections. Choose your parts, or roll the die for a surprise!</p>
                             <p class="text-gray-500 text-sm">Take a screenshot and save your ideas for later.</p>
                             <p class="text-gray-500 text-sm">Press the '?' Question Mark for more information/help.</p>   
@@ -520,7 +525,8 @@
                             <li><strong class="text-amber-400">Tail:</strong> This will turn the tail that comes with your Upper Body on and off. </li>
                             <li><strong class="text-amber-400">Randomize:</strong> Feeling lucky? Click the "Randomize" icon (the die) to have the app select gear. Whether the tail will appear is random, and there is a chance for no helmet to be selected.</li>
                             <li><strong class="text-amber-400">Clear All:</strong> To remove all currently equipped items, click the "Clear" icon (the 'X').</li>
-                            <li><strong class="text-amber-400">Exclusive:</strong> Choices with parts that are completely or partially exclusive to the LegionsCon Armory Experience are marked with 'EX' so you can be informed. Those parts (highlighted on the thumbnail) will not be available when the pre-built versions of the figures are sold through store-horsemen.com. Credit and Thanks goes to Bill Drewnowski (DorkLair) for compiling this information and his additional input.</li>
+                            <li><strong class="text-amber-400">Exclusive:</strong> Choices with parts that are completely or partially exclusive to the LegionsCon Armory Experience are marked with 'EX' so you can be informed. Those parts (highlighted on the thumbnail) will not be available when the pre-built versions of the figures are sold through <a href="https://store-horsemen.myshopify.com/" class="externallink">Store Horsemen</a>. Credit and Thanks goes to Bill Drewnowski (DorkLair) for compiling this information and his additional input.</li>
+                            <li><strong class="text-amber-400">Legions Con:</strong> The Armory Experience is only at Legions Con. Find out more about the event at <a href="https://legionscon.com/" class="externallink">legionscon.com</a> </li>
                         </ul>
                         <p class="mt-4 text-sm text-gray-500 text-center">Special thanks goes to Jeff-Rey Evans for his invaluable help collaborating on this project. And, of course, to everyone at Four Horseman Studios for letting me do this again :) -- Kurr'b</p>
                     </div>
@@ -586,10 +592,10 @@
                         { id: "armor-legion-blood", name: "Blood Legion Armor", thumbnailUrl: "images/armor_legion_blood_thumb.png", displayUrl: "" },
                         { id: "armor-legion-grungy", name: "Grungy Legion Armor", thumbnailUrl: "images/armor_legion_grungy_thumb.png", displayUrl: "" },
                         { id: "armor-legion-silver", name: "Silver Legion Armor", thumbnailUrl: "images/armor_legion_silver_thumb.png", displayUrl: "" },
-                        { id: "armor-tattered-black", name: "Black Tattered Armor", thumbnailUrl: "images/armor_tattered_black_thumb.png", displayUrl: "" },
-                        { id: "armor-tattered-blood", name: "Blood Tattered Armor", thumbnailUrl: "images/armor_tattered_blood_thumb.png", displayUrl: "" },
-                        { id: "armor-tattered-grungy", name: "Grungy Tattered Armor", thumbnailUrl: "images/armor_tattered_grungy_thumb.png", displayUrl: "" },
-                        { id: "armor-tattered-silver", name: "Silver Tattered Armor", thumbnailUrl: "images/armor_tattered_silver_thumb.png", displayUrl: "" },
+                        { id: "armor-tattered-black", name: "Black Tattered Armor", thumbnailUrl: "images/armor_tattered_black_thumb.png", displayUrl: "images/armor_tattered_black.png" },
+                        { id: "armor-tattered-blood", name: "Blood Tattered Armor", thumbnailUrl: "images/armor_tattered_blood_thumb.png", displayUrl: "images/armor_tattered_blood.png" },
+                        { id: "armor-tattered-grungy", name: "Grungy Tattered Armor", thumbnailUrl: "images/armor_tattered_grungy_thumb.png", displayUrl: "images/armor_tattered_grungy.png" },
+                        { id: "armor-tattered-silver", name: "Silver Tattered Armor", thumbnailUrl: "images/armor_tattered_silver_thumb.png", displayUrl: "images/armor_tattered_silver.png " },
                         { id: "armor-valiant-black", name: "Black Valiant Armor", thumbnailUrl: "images/armor_valiant_black_thumb.png", displayUrl: "images/armor_valiant_black.png" },
                         { id: "armor-valiant-blood", name: "Blood Valiant Armor", thumbnailUrl: "images/armor_valiant_blood_thumb.png", displayUrl: "images/armor_valiant_blood.png" },
                         { id: "armor-valiant-grungy", name: "Grungy Valiant Armor", thumbnailUrl: "images/armor_valiant_grungy_thumb.png", displayUrl: "images/armor_valiant_grungy.png" },
