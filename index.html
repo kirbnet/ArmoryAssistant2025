@@ -484,13 +484,7 @@
         <main class="flex-1 flex flex-col overflow-auto">
             <!-- Flex container for the figure and options -->
             <div class="flex flex-row flex-grow overflow-hidden">
-                <!-- Options Grid Container (scrollable pane) -->
-                 <!-- flex: -->
-                <!-- <div id="options-container" class="flex-1 md:flex-[1] p-4 overflow-y-auto"> -->
-                    <div id="options-container" class="w-1/3 p-4 overflow-y-auto">
-                        <!-- Dynamic content will be loaded here by JavaScript -->
-                    </div>
-
+             
                 <!-- Figure Display Area (where the character is shown) -->
                  <!-- flex version - the options are too wide on mobile, but maybe a better one -->
                   <!-- Flex verion has the figure smaller but the choices are more visible for the exclusive stuff...-->
@@ -505,11 +499,21 @@
                             <p class="text-gray-500 text-sm">Take a screenshot and save your ideas for later.</p>
                             <p class="text-gray-500 text-sm">Press the '?' Question Mark for more information/help.</p>   
                         </div>
+                        <!-- Images will be layered here by JavaScript -->
+                        <div id="enlarge-hint" class="absolute bottom-4 left-1/2 -translate-x-1/2 text-gray-500 text-sm opacity-0 transition-opacity duration-300">
+                            Click to enlarge
+                        </div>
                     </div>
                     <!-- Images will be layered here by JavaScript -->
                 </div>
     
-                
+                   <!-- Options Grid Container (scrollable pane) -->
+                 <!-- flex: -->
+                <!-- <div id="options-container" class="flex-1 md:flex-[1] p-4 overflow-y-auto"> -->
+                    <div id="options-container" class="w-1/3 p-4 overflow-y-auto">
+                        <!-- Dynamic content will be loaded here by JavaScript -->
+                    </div>
+
             </div>
         </main>
 
@@ -535,7 +539,16 @@
                     </div>
                 </div>
             </div>
-
+            
+            <!-- Fullscreen Image Render -->
+            <div id="fullscreen-pane" class="fixed inset-0 bg-black hidden items-center justify-center p-4 z-50">
+                <button id="close-fullscreen-btn" class="absolute top-4 right-4 p-2 text-gray-400 transition-colors hover:text-gray-200 z-50">
+                    <svg fill="currentColor" class="h-8 w-8" viewBox="0 0 24 24"><path d="M19,6.41,17.59,5,12,10.59,6.41,5,5,6.41,10.59,12,5,17.59,6.41,19,12,13.41,17.59,19,19,17.59,13.41,12Z"/></svg>
+                </button>
+                <div id="fullscreen-content" class="relative w-full h-full flex items-center justify-center">
+                    <!-- Fullscreen image layers will be appended here -->
+                </div>
+            </div>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const sidebarButtons = document.querySelectorAll('.icon-btn');
@@ -548,7 +561,12 @@
                 const closeHelpBtn = document.getElementById('close-help-btn');
                 const tailBtn = document.getElementById('tail-btn');
                 const welcomeMessage = document.getElementById('welcome-message');
+                const enlargeHint = document.getElementById('enlarge-hint');
 
+                // Fullscreen elements
+                const fullscreenPane = document.getElementById('fullscreen-pane');
+                const closeFullscreenBtn = document.getElementById('close-fullscreen-btn');
+                const fullscreenContent = document.getElementById('fullscreen-content');
         
                 // Manually define all the options
                 const allOptions = {
@@ -696,16 +714,30 @@
         
                 function renderFigure() {
                     figureDisplay.innerHTML = '';
+                    welcomeMessage.classList.add('hidden');
                     const zIndexes = { helmet: 5, armor: 4, upper: 2, lower: 3, tail: 1 };
-                    for (const category in selectedItems) {
+                    const orderedCategories = Object.keys(zIndexes).sort((a, b) => zIndexes[a] - zIndexes[b]);
+                    let hasItems = false;
+                    
+                    orderedCategories.forEach(category => {
                         if (selectedItems[category]) {
+                            hasItems = true;
                             const img = document.createElement('img');
-                            // Use the new displayUrl for the main figure
                             img.src = selectedItems[category].displayUrl;
                             img.alt = category;
                             img.style.zIndex = zIndexes[category];
+                            img.className = 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-contain';
                             figureDisplay.appendChild(img);
                         }
+                    });
+
+                    if (!hasItems) {
+                        figureDisplay.appendChild(welcomeMessage);
+                        welcomeMessage.classList.remove('hidden');
+                        enlargeHint.classList.remove('opacity-100');
+                    } else {
+                        figureDisplay.appendChild(enlargeHint);
+                        enlargeHint.classList.add('opacity-100');
                     }
                 }
         
@@ -715,7 +747,9 @@
                         sidebarButtons.forEach(btn => btn.classList.remove('active'));
                         button.classList.add('active');
                         const category = button.id.replace('-btn', '');
-                        renderOptionsGrid(category);
+                        if (category in allOptions) {
+                            renderOptionsGrid(category);
+                        }
                     });
                 });
         
@@ -796,6 +830,40 @@
                     renderFigure();
                 });
         
+
+                // Event listener for the fullscreen feature
+                figureDisplay.addEventListener('click', () => {
+                    if (!welcomeMessage.classList.contains('hidden')) {
+                        return; // Do not open fullscreen if no figure is rendered
+                    }
+                    
+                    // Clear previous fullscreen content
+                    fullscreenContent.innerHTML = '';
+                    
+                    // Re-add the close button
+                    fullscreenContent.appendChild(closeFullscreenBtn);
+                    
+                    // Copy and append currently rendered image layers
+                    const imageLayers = Array.from(figureDisplay.querySelectorAll('img'));
+                    imageLayers.forEach(img => {
+                        const newImg = document.createElement('img');
+                        newImg.src = img.src;
+                        newImg.alt = img.alt;
+                        newImg.className = 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-contain';
+                        newImg.style.zIndex = img.style.zIndex;
+                        fullscreenContent.appendChild(newImg);
+                    });
+                    
+                    fullscreenPane.classList.remove('hidden');
+                    fullscreenPane.classList.add('flex');
+                });
+                
+                // Close fullscreen view
+                closeFullscreenBtn.addEventListener('click', () => {
+                    fullscreenPane.classList.remove('flex');
+                    fullscreenPane.classList.add('hidden');
+                });
+
                 // Initialize the app by showing the first options
                 document.getElementById('upper-btn').click();
             });
