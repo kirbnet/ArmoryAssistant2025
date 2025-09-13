@@ -648,6 +648,14 @@
                 // AllOptions is the total of all the things
                 const categories = ["upper", "lower", "armor", "helmet"];
         
+                // Secret Swigg!
+                const swiggHelmet = {
+                    id: "head-swigg",
+                    name: "Swigg",
+                    thumbnailUrl: "images/helmet_swigg.png",
+                    displayUrl: "images/helmet_swigg.png"
+                };
+
                 let selectedItems = {
                     upper: null,
                     lower: null,
@@ -823,6 +831,12 @@
                     const showHelmet = Math.random() > 0.1;
                     if (!showHelmet) {
                         selectedItems.helmet = null;
+                    }
+
+                    // Roll for the special easter egg head (1/1000 chance)
+                    const chanceOfSwigg =  Math.floor(Math.random() * 1000) + 1; //Math.random() < 0.9;
+                    if (chanceOfSwigg === 1) {
+                        selectedItems.helmet = swiggHelmet;
                     }
 
                     renderFigure();
