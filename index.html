@@ -709,6 +709,30 @@
                         // Otherwise, select the new item
                         selectedItems[category] = option;
                     }
+
+                    // Check for tail logic whenever the upper body is changed
+                    // If the tail is active, then pick the corresponding tail
+                    // If the tail is not active, do nothing really
+                    if (category === 'upper') {
+                        if (selectedItems.upper) {
+                            const upperId = selectedItems.upper.id;
+                            const upperIndex = allOptions.upper.findIndex(option => option.id === upperId);
+                            
+                            if (upperIndex !== -1 && selectedItems.tail) {
+                                selectedItems.tail = allOptions.tail[upperIndex];
+                                tailBtn.classList.add('text-amber-400');
+                            } else if (!selectedItems.upper) {
+                                // If the upper torso is deselected
+                                selectedItems.tail = null;
+                                tailBtn.classList.remove('active');
+                            }
+                        } else {
+                            selectedItems.tail = null;
+                            tailBtn.classList.remove('active');
+                        }
+                    }
+
+                    // Render the figure
                     updateSelectionBorders();
                     renderFigure();
                 }
@@ -748,7 +772,9 @@
                         sidebarButtons.forEach(btn => btn.classList.remove('active'));
                         button.classList.add('active');
                         const category = button.id.replace('-btn', '');
-                        if (category in allOptions) {
+                        //use just categories to not show the tail options
+                        //use category in allOptions to have the tail options visible
+                        if (categories.includes(category)) {
                             renderOptionsGrid(category);
                         }
                     });
